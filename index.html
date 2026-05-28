@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="mn">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +25,7 @@
             background: linear-gradient(135deg, #8b0000 0%, #4a0000 100%);
             color: white;
             padding: 30px 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .header-content {
@@ -40,7 +41,7 @@
             height: 90px;
             width: auto;
             display: block;
-            filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.2));
+            filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.2));
         }
 
         .text-container {
@@ -85,7 +86,7 @@
             padding: 5px 15px;
             border-radius: 25px;
             border: 2px solid #27ae60;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
         .slideshow-controls label {
@@ -125,7 +126,8 @@
             gap: 8px;
         }
 
-        .btn.active, .btn:hover {
+        .btn.active,
+        .btn:hover {
             background-color: #8b0000;
             color: white;
             box-shadow: 0 4px 10px rgba(139, 0, 0, 0.3);
@@ -140,7 +142,7 @@
             padding: 5px 15px;
             border-radius: 25px;
             border: 2px solid #2980b9;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
         .music-select {
@@ -156,7 +158,9 @@
         }
 
         /* Дүрсэн (Icon) товчлуурууд */
-        .play-btn, .music-btn, .mode-btn {
+        .play-btn,
+        .music-btn,
+        .mode-btn {
             width: 40px;
             height: 40px;
             padding: 0 !important;
@@ -169,7 +173,7 @@
             background-color: #27ae60;
             color: white;
         }
-        
+
         .play-btn:hover {
             background-color: #219653;
             box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
@@ -179,6 +183,7 @@
         .play-btn.playing {
             background-color: #e74c3c;
         }
+
         .play-btn.playing:hover {
             background-color: #c0392b;
             box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
@@ -189,11 +194,13 @@
             border: none;
             color: white;
         }
+
         .music-btn:hover {
             background-color: #2471a3;
             box-shadow: 0 4px 10px rgba(41, 128, 185, 0.3);
             color: white;
         }
+
         .music-btn.muted {
             background-color: #7f8c8d;
         }
@@ -205,14 +212,17 @@
             color: white;
             font-size: 1rem;
         }
+
         .mode-btn:hover {
             background-color: #8e44ad;
             box-shadow: 0 4px 10px rgba(155, 89, 182, 0.3);
             color: white;
         }
+
         .mode-btn.loop-active {
             background-color: #f39c12;
         }
+
         .mode-btn.loop-active:hover {
             background-color: #d35400;
             box-shadow: 0 4px 10px rgba(243, 156, 18, 0.3);
@@ -232,7 +242,7 @@
             background-color: white;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
             transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
             cursor: pointer;
             opacity: 1;
@@ -246,7 +256,7 @@
 
         .gallery-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
         .gallery-item img {
@@ -321,8 +331,13 @@
             transform: translateY(-50%) scale(1.1);
         }
 
-        .prev-btn { left: 30px; }
-        .next-btn { right: 30px; }
+        .prev-btn {
+            left: 30px;
+        }
+
+        .next-btn {
+            right: 30px;
+        }
 
         .modal-slideshow-container {
             max-width: 80%;
@@ -340,7 +355,7 @@
             max-width: 100%;
             max-height: 100%;
             border-radius: 8px;
-            box-shadow: 0 5px 25px rgba(255,255,255,0.1);
+            box-shadow: 0 5px 25px rgba(255, 255, 255, 0.1);
             position: absolute;
             top: 0;
             left: 0;
@@ -353,13 +368,27 @@
 
         /* СЛАЙД ШИЛЖИЛТИЙН АНИМАЦИ (Зүүнээс орж, баруун тийш уусах) */
         @keyframes slideInFromLeft {
-            from { transform: translateX(-100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         @keyframes slideOutToRightFade {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
         }
 
         .modal-slide-current {
@@ -390,29 +419,90 @@
             z-index: 1020;
         }
 
-        .close-btn:hover { color: #ff4d4d; }
+        .close-btn:hover {
+            color: #ff4d4d;
+        }
 
         /* Утаснаас үзэхэд зориулсан тохиргоо */
         @media (max-width: 768px) {
-            .header-content { flex-direction: column; gap: 15px; text-align: center; }
-            .text-container { text-align: center; }
-            header h1 { font-size: 1.8rem; }
-            header p { font-size: 1rem; }
-            .logo-container img { height: 80px; }
-            .controls-container { flex-direction: column; gap: 15px; }
-            .filter-buttons { width: 100%; justify-content: center; }
-            .slideshow-controls { width: 100%; justify-content: center; }
-            .music-playlist-container { width: 100%; justify-content: center; }
-            .music-select { max-width: 60%; }
-            .btn { padding: 8px 16px; font-size: 0.9rem; }
-            .play-btn, .music-btn, .mode-btn { width: 40px; height: 40px; }
-            .nav-btn { font-size: 24px; padding: 10px 14px; }
-            .prev-btn { left: 10px; }
-            .next-btn { right: 10px; }
-            .modal-slideshow-container { max-width: 95%; }
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .text-container {
+                text-align: center;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            header p {
+                font-size: 1rem;
+            }
+
+            .logo-container img {
+                height: 80px;
+            }
+
+            .controls-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .filter-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .slideshow-controls {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .music-playlist-container {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .music-select {
+                max-width: 60%;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+
+            .play-btn,
+            .music-btn,
+            .mode-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .nav-btn {
+                font-size: 24px;
+                padding: 10px 14px;
+            }
+
+            .prev-btn {
+                left: 10px;
+            }
+
+            .next-btn {
+                right: 10px;
+            }
+
+            .modal-slideshow-container {
+                max-width: 95%;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <audio id="bgMusic" src="sounds/surguuli_duu.mp3" onended="handleTrackEnd()"></audio>
@@ -435,10 +525,11 @@
             <button class="btn" onclick="filterClass('12a')">12а - анги</button>
             <button class="btn" onclick="filterClass('12b')">12б - анги</button>
         </div>
-        
+
         <div class="slideshow-controls">
             <label for="intervalInput">Хугацаа:</label>
-            <input type="number" id="intervalInput" class="time-input" value="8" min="1" max="60" onchange="handleTimeChange()">
+            <input type="number" id="intervalInput" class="time-input" value="8" min="1" max="60"
+                onchange="handleTimeChange()">
             <label for="intervalInput">сек</label>
             <button id="slideshowBtn" class="btn play-btn" onclick="toggleSlideshow()">
                 ▶
@@ -448,7 +539,6 @@
         <div class="music-playlist-container">
             <select id="musicSelect" class="music-select" onchange="handleMusicChange()">
                 <option value="sounds/surguuli_duu.mp3">Сургуулийн дуу</option>
-                <option value="sounds/Neg_angiinhan_Hurd.mp3">Нэг ангийнхан (Хурд)</option>
                 <option value="sounds/Tugsuh_suragchin_uyanga.mp3">Төгсөх сурагч (Уянга)</option>
                 <option value="sounds/Bid_Neg_Angiinhan_3_buduun.mp3">Бид нэг ангийнхан (3 Бүдүүн)</option>
                 <option value="sounds/8-DAHI-GARIG-10-JILIIN-DURSAMJ.mp3">10 жилийн дурсамж (8 Дахь гариг)</option>
@@ -457,197 +547,298 @@
                 <option value="sounds/Khonkhnii nulims.mp3">Хонхны нулимс</option>
                 <option value="sounds/surguuliin_zug.mp3">Сургуулийн зүг</option>
                 <option value="sounds/Uyakhan tsenkher khavar.mp3">Уянхан цэнхэр хавар</option>
-                <option value="sounds/Чоно - Сүүлчийн хичээлийн дараа Svvlchiin khicheeliin daraa[Үгтэй] - GP Video.mp3">Сүүлчийн хичээлийн дараа (Чоно)</option>
+                <option
+                    value="sounds/Svvlchiin khicheeliin daraa_chono.mp3">
+                    Сүүлчийн хичээлийн дараа (Чоно)</option>
                 <option value="sounds/Guys_surguuli_mine_bayartai.mp3">Сургууль минь баяртай (Guys)</option>
                 <option value="sounds/DIGITAL - MUNGUN HONHNII DUU.mp3">Мөнгөн хонхны дуу (Digital)</option>
                 <option value="sounds/solongo_shig_nas.mp3">Солонго шиг нас</option>
+                <option value="sounds/Neg_angiinhan_Hurd.mp3">Нэг ангийнхан (Хурд)</option>
             </select>
-            
-            <button id="musicControlBtn" class="btn music-btn muted" onclick="toggleMusic()" title="Тоглуулах / Түр зогсоох">
+
+            <button id="musicControlBtn" class="btn music-btn muted" onclick="toggleMusic()"
+                title="Тоглуулах / Түр зогсоох">
                 🎵
             </button>
 
-            <button id="musicModeBtn" class="btn mode-btn" onclick="toggleMusicMode()" title="Горим солих: Дараагийнх руу шилжих">
+            <button id="musicModeBtn" class="btn mode-btn" onclick="toggleMusicMode()"
+                title="Горим солих: Дараагийнх руу шилжих">
                 ➡️
             </button>
         </div>
     </div>
 
     <div class="gallery-container">
-        
+
         <div class="gallery-item 12a" onclick="openModal('images/12a_Anujin.jpg')">
             <img src="images/12a_Anujin.jpg" alt="Анужин">
-            <div class="student-info"><h3>Анужин</h3><p>12а анги</p></div>
+            <div class="student-info">
+                <h3>Анужин</h3>
+                <p>12а анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12a" onclick="openModal('images/12a_Azjargal.jpg')">
             <img src="images/12a_Azjargal.jpg" alt="Азжаргал">
-            <div class="student-info"><h3>Азжаргал</h3><p>12а анги</p></div>
+            <div class="student-info">
+                <h3>Азжаргал</h3>
+                <p>12а анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12a" onclick="openModal('images/12a_Baasantungalag.jpg')">
             <img src="images/12a_Baasantungalag.jpg" alt="Баасантунгалаг">
-            <div class="student-info"><h3>Баасантунгалаг</h3><p>12а анги</p></div>
+            <div class="student-info">
+                <h3>Баасантунгалаг</h3>
+                <p>12а анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12a" onclick="openModal('images/12a_Bayarjargal.jpg')">
             <img src="images/12a_Bayarjargal.jpg" alt="Баяржаргал">
-            <div class="student-info"><h3>Баяржаргал</h3><p>12а анги</p></div>
+            <div class="student-info">
+                <h3>Баяржаргал</h3>
+                <p>12а анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12a" onclick="openModal('images/12a_Bulgan.jpg')">
             <img src="images/12a_Bulgan.jpg" alt="Булган">
-            <div class="student-info"><h3>Булган</h3><p>12а анги</p></div>
+            <div class="student-info">
+                <h3>Булган</h3>
+                <p>12а анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12a" onclick="openModal('images/12a_Chinbat.jpg')">
             <img src="images/12a_Chinbat.jpg" alt="Чинбат">
-            <div class="student-info"><h3>Чинбат</h3><p>12а анги</p></div>
+            <div class="student-info">
+                <h3>Чинбат</h3>
+                <p>12а анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12a" onclick="openModal('images/12a_Dashnyam.jpg')">
             <img src="images/12a_Dashnyam.jpg" alt="Дашням">
-            <div class="student-info"><h3>Дашням</h3><p>12а анги</p></div>
+            <div class="student-info">
+                <h3>Дашням</h3>
+                <p>12а анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12a" onclick="openModal('images/12a_Emuujin.jpg')">
             <img src="images/12a_Emuujin.jpg" alt="Эмүүжин">
-            <div class="student-info"><h3>Эмүүжин</h3><p>12а анги</p></div>
+            <div class="student-info">
+                <h3>Эмүүжин</h3>
+                <p>12а анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12a" onclick="openModal('images/12a_Erkhsaran.jpg')">
             <img src="images/12a_Erkhsaran.jpg" alt="Эрхсаран">
-            <div class="student-info"><h3>Эрхсаран</h3><p>12а анги</p></div>
+            <div class="student-info">
+                <h3>Эрхсаран</h3>
+                <p>12а анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12a" onclick="openModal('images/12a_Ganbat.jpg')">
             <img src="images/12a_Ganbat.jpg" alt="Ганбат">
-            <div class="student-info"><h3>Ганбат</h3><p>12а анги</p></div>
+            <div class="student-info">
+                <h3>Ганбат</h3>
+                <p>12а анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12a" onclick="openModal('images/12a_Goomaral.jpg')">
             <img src="images/12a_Goomaral.jpg" alt="Гоомарал">
-            <div class="student-info"><h3>Гоомарал</h3><p>12а анги</p></div>
+            <div class="student-info">
+                <h3>Гоомарал</h3>
+                <p>12а анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12a" onclick="openModal('images/12a_Munkh-Ireedui.jpg')">
             <img src="images/12a_Munkh-Ireedui.jpg" alt="Мөнх-Ирээдүй">
-            <div class="student-info"><h3>Мөнх-Ирээдүй</h3><p>12а анги</p></div>
+            <div class="student-info">
+                <h3>Мөнх-Ирээдүй</h3>
+                <p>12а анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12a" onclick="openModal('images/12a_Ulziidemberel.jpg')">
             <img src="images/12a_Ulziidemberel.jpg" alt="Өлзийдэмбэрэл">
-            <div class="student-info"><h3>Өлзийдэмбэрэл</h3><p>12а анги</p></div>
+            <div class="student-info">
+                <h3>Өлзийдэмбэрэл</h3>
+                <p>12а анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12a" onclick="openModal('images/12a_Zol-Erdene.jpg')">
             <img src="images/12a_Zol-Erdene.jpg" alt="Зол-Эрдэнэ">
-            <div class="student-info"><h3>Зол-Эрдэнэ</h3><p>12а анги</p></div>
+            <div class="student-info">
+                <h3>Зол-Эрдэнэ</h3>
+                <p>12а анги</p>
+            </div>
         </div>
 
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Aldarmaa.jpg')">
             <img src="images/12b_Aldarmaa.jpg" alt="Алдармаа">
-            <div class="student-info"><h3>Алдармаа</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Алдармаа</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Anu-Ujin_B.jpg')">
             <img src="images/12b_Anu-Ujin_B.jpg" alt="Ану-Үжин">
-            <div class="student-info"><h3>Ану-Үжин</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Ану-Үжин</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Burte.jpg')">
             <img src="images/12b_Burte.jpg" alt="Бөртэ">
-            <div class="student-info"><h3>Бөртэ</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Бөртэ</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Dovchin.jpg')">
             <img src="images/12b_Dovchin.jpg" alt="Довчин">
-            <div class="student-info"><h3>Довчин</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Довчин</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Elbegjargal.jpg')">
             <img src="images/12b_Elbegjargal.jpg" alt="Элбэгжаргал">
-            <div class="student-info"><h3>Элбэгжаргал</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Элбэгжаргал</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Emujin_Ts.jpg')">
             <img src="images/12b_Emujin_Ts.jpg" alt="Эмүүжин">
-            <div class="student-info"><h3>Эмүүжин</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Эмүүжин</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Enkhtuvshin.jpg')">
             <img src="images/12b_Enkhtuvshin.jpg" alt="Энхтүвшин">
-            <div class="student-info"><h3>Энхтүвшин</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Энхтүвшин</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Irmuun.jpg')">
             <img src="images/12b_Irmuun.jpg" alt="Ирмүүн">
-            <div class="student-info"><h3>Ирмүүн</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Ирмүүн</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Khongor.jpg')">
             <img src="images/12b_Khongor.jpg" alt="Хонгор">
-            <div class="student-info"><h3>Хонгор</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Хонгор</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Lida.jpg')">
             <img src="images/12b_Lida.jpg" alt="Лида">
-            <div class="student-info"><h3>Лида</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Лида</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Margad-Erdene.jpg')">
             <img src="images/12b_Margad-Erdene.jpg" alt="Маргад-Эрдэнэ">
-            <div class="student-info"><h3>Маргад-Эрдэнэ</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Маргад-Эрдэнэ</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Munkhjin_B.jpg')">
             <img src="images/12b_Munkhjin_B.jpg" alt="Мөнхжин (Б)">
-            <div class="student-info"><h3>Мөнхжин (Б)</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Мөнхжин (Б)</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Munkhjin.jpg')">
             <img src="images/12b_Munkhjin.jpg" alt="Мөнхжин">
-            <div class="student-info"><h3>Мөнхжин</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Мөнхжин</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Naranbileg.jpg')">
             <img src="images/12b_Naranbileg.jpg" alt="Наранбилэг">
-            <div class="student-info"><h3>Наранбилэг</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Наранбилэг</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Telmuun-Erdem.jpg')">
             <img src="images/12b_Telmuun-Erdem.jpg" alt="Тэлмүүн-Эрдэм">
-            <div class="student-info"><h3>Тэлмүүн-Эрдэм</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Тэлмүүн-Эрдэм</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Temuujin.jpg')">
             <img src="images/12b_Temuujin.jpg" alt="Тэмүүжин">
-            <div class="student-info"><h3>Тэмүүжин</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Тэмүүжин</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Temuulen.jpg')">
             <img src="images/12b_Temuulen.jpg" alt="Тэмүүлэн">
-            <div class="student-info"><h3>Тэмүүлэн</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Тэмүүлэн</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
         <div class="gallery-item 12b" onclick="openModal('images/12b_Uchral.jpg')">
             <img src="images/12b_Uchral.jpg" alt="Учрал">
-            <div class="student-info"><h3>Учрал</h3><p>12б анги</p></div>
+            <div class="student-info">
+                <h3>Учрал</h3>
+                <p>12б анги</p>
+            </div>
         </div>
 
     </div>
 
     <div id="imageModal" class="modal" onclick="closeModal()">
         <span class="close-btn">&times;</span>
-        
+
         <button class="nav-btn prev-btn" onclick="prevImage(event)">❮</button>
-        
+
         <div class="modal-slideshow-container" onclick="event.stopPropagation()">
             <img id="imgTargetCurrent" class="modal-slide modal-slide-current">
             <img id="imgTargetNext" class="modal-slide modal-slide-next">
         </div>
-        
+
         <button class="nav-btn next-btn" onclick="nextImage(event)">❯</button>
     </div>
 
@@ -700,9 +891,9 @@
         function handleMusicChange() {
             const music = document.getElementById('bgMusic');
             const musicSelect = document.getElementById('musicSelect');
-            
+
             music.src = musicSelect.value;
-            
+
             if (isMusicPlaying) {
                 music.play().catch(error => {
                     console.log("Аудио тоглуулахад алдаа гарлаа.");
@@ -713,7 +904,7 @@
         // Дуу дуусах үед ажиллах функц (Loop болон Auto Next-ийг тодорхойлно)
         function handleTrackEnd() {
             const music = document.getElementById('bgMusic');
-            
+
             if (isLoopMode) {
                 // Хэрэв Loop горим идэвхтэй бол тухайн дууг дахин эхнээс нь тоглуулна
                 music.currentTime = 0;
@@ -723,7 +914,7 @@
                 const musicSelect = document.getElementById('musicSelect');
                 let currentIndex = musicSelect.selectedIndex;
                 let nextIndex = (currentIndex + 1) % musicSelect.options.length;
-                
+
                 musicSelect.selectedIndex = nextIndex;
                 handleMusicChange();
             }
@@ -732,11 +923,11 @@
         // Ангиар шүүх функц
         function filterClass(className) {
             currentClassFilter = className;
-            stopSlideshow(); 
+            stopSlideshow();
 
             const buttons = document.querySelectorAll('.filter-buttons .btn');
             buttons.forEach(btn => btn.classList.remove('active'));
-            if(event) event.target.classList.add('active');
+            if (event) event.target.classList.add('active');
 
             const items = document.querySelectorAll('.gallery-item');
             items.forEach(item => {
@@ -778,12 +969,12 @@
 
             modalImgCurrent.className = 'modal-slide modal-slide-current';
             modalImgNext.className = 'modal-slide modal-slide-next';
-            
+
             void modalImgCurrent.offsetWidth;
             void modalImgNext.offsetWidth;
 
-            modalImgCurrent.classList.add('hide'); 
-            modalImgNext.classList.add('show');    
+            modalImgCurrent.classList.add('hide');
+            modalImgNext.classList.add('show');
 
             setTimeout(() => {
                 modalImgCurrent.src = images[nextIndex];
@@ -798,13 +989,13 @@
         function nextImage(event) {
             if (event) {
                 event.stopPropagation();
-                stopSlideshow(); 
+                stopSlideshow();
             }
             if (isTransitioning) return;
-            
+
             const images = getActiveImages();
             if (images.length === 0) return;
-            
+
             let nextIndex = (currentImageIndex + 1) % images.length;
             changeImageWithAnimation(nextIndex);
         }
@@ -813,28 +1004,28 @@
         function prevImage(event) {
             if (event) {
                 event.stopPropagation();
-                stopSlideshow(); 
+                stopSlideshow();
             }
             if (isTransitioning) return;
-            
+
             const images = getActiveImages();
             if (images.length === 0) return;
-            
+
             let nextIndex = (currentImageIndex - 1 + images.length) % images.length;
             changeImageWithAnimation(nextIndex);
         }
 
         // Слайд интервал эхлүүлэх функц
         function startSlideshowInterval(seconds) {
-            if(slideshowInterval) clearInterval(slideshowInterval);
-            
+            if (slideshowInterval) clearInterval(slideshowInterval);
+
             slideshowInterval = setInterval(() => {
                 const images = getActiveImages();
                 if (images.length === 0) return;
-                
+
                 let nextIndex = (currentImageIndex + 1) % images.length;
                 changeImageWithAnimation(nextIndex);
-                
+
             }, seconds * 1000);
         }
 
@@ -842,7 +1033,7 @@
         function toggleSlideshow() {
             const btn = document.getElementById('slideshowBtn');
             const timeInput = document.getElementById('intervalInput');
-            
+
             if (slideshowInterval) {
                 stopSlideshow();
             } else {
@@ -850,10 +1041,10 @@
                 if (activeImages.length === 0) return;
 
                 let seconds = parseFloat(timeInput.value);
-                if (isNaN(seconds) || seconds <= 0) seconds = 5; 
+                if (isNaN(seconds) || seconds <= 0) seconds = 5;
 
                 currentImageIndex = 0;
-                openModal(activeImages[currentImageIndex]); 
+                openModal(activeImages[currentImageIndex]);
                 btn.classList.add('playing');
                 btn.innerHTML = '⏸';
 
@@ -866,8 +1057,8 @@
                 const timeInput = document.getElementById('intervalInput');
                 let seconds = parseFloat(timeInput.value);
                 if (isNaN(seconds) || seconds <= 0) seconds = 5;
-                
-                startSlideshowInterval(seconds); 
+
+                startSlideshowInterval(seconds);
             }
         }
 
@@ -886,7 +1077,7 @@
             const modal = document.getElementById('imageModal');
             const modalImgCurrent = document.getElementById('imgTargetCurrent');
             modal.style.display = 'flex';
-            
+
             const images = getActiveImages();
             currentImageIndex = images.indexOf(imgSrc);
             if (currentImageIndex === -1) currentImageIndex = 0;
@@ -901,8 +1092,8 @@
         function closeModal() {
             const modal = document.getElementById('imageModal');
             modal.classList.remove('show');
-            stopSlideshow(); 
-            
+            stopSlideshow();
+
             setTimeout(() => {
                 if (!modal.classList.contains('show')) {
                     modal.style.display = 'none';
@@ -910,11 +1101,11 @@
                     document.getElementById('imgTargetNext').src = '';
                     isTransitioning = false;
                 }
-            }, 500); 
+            }, 500);
         }
 
         // Гарны удирдлага (Esc, Зүүн/Баруун суут товчлуур)
-        document.addEventListener('keydown', function(event) {
+        document.addEventListener('keydown', function (event) {
             const modal = document.getElementById('imageModal');
             if (modal.style.display === 'flex') {
                 if (event.key === "Escape") {
@@ -928,4 +1119,5 @@
         });
     </script>
 </body>
+
 </html>
