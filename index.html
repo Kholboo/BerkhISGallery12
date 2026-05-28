@@ -19,7 +19,7 @@
             padding-bottom: 50px;
         }
 
-        /* Толгой хэсэг (Лого болон Бичиг хамт) */
+        /* Толгой хсэн (Лого болон Бичиг хамт) */
         header {
             background: linear-gradient(135deg, #8b0000 0%, #4a0000 100%);
             color: white;
@@ -61,7 +61,7 @@
             font-weight: 500;
         }
 
-        /* Удирдах цэс (Шүүлтүүр болон Автомат тоглуулах товч) */
+        /* Удирдах цэс */
         .controls-container {
             display: flex;
             justify-content: center;
@@ -121,6 +121,7 @@
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
         }
 
@@ -130,13 +131,19 @@
             box-shadow: 0 4px 10px rgba(139, 0, 0, 0.3);
         }
 
-        /* Автомат тоглуулах болон Хөгжмийн товчны загвар */
+        /* Дүрсэн (Icon) товчлуурууд */
+        .play-btn, .music-btn {
+            width: 40px;
+            height: 40px;
+            padding: 0 !important;
+            border-radius: 50%;
+            font-size: 1.1rem;
+        }
+
         .play-btn {
             border: none;
             background-color: #27ae60;
             color: white;
-            padding: 8px 20px;
-            font-size: 0.95rem;
         }
         
         .play-btn:hover {
@@ -157,8 +164,6 @@
             background-color: #2980b9;
             border: none;
             color: white;
-            padding: 8px 20px;
-            font-size: 0.95rem;
         }
         .music-btn:hover {
             background-color: #2471a3;
@@ -250,15 +255,46 @@
             opacity: 1;
         }
 
-        /* Зургийн slideshow сав */
+        /* Навигацийн Суман товчлуурууд */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 32px;
+            padding: 15px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s, transform 0.2s;
+            z-index: 1010;
+            user-select: none;
+        }
+
+        .nav-btn:hover {
+            background-color: #8b0000;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev-btn {
+            left: 30px;
+        }
+
+        .next-btn {
+            right: 30px;
+        }
+
         .modal-slideshow-container {
-            max-width: 90%;
+            max-width: 80%;
             max-height: 85vh;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
             overflow: hidden;
+            width: 100%;
+            height: 85vh;
         }
 
         .modal-slide {
@@ -328,6 +364,7 @@
             font-weight: bold;
             cursor: pointer;
             transition: color 0.2s;
+            z-index: 1020;
         }
 
         .close-btn:hover {
@@ -369,6 +406,17 @@
                 padding: 8px 16px;
                 font-size: 0.9rem;
             }
+            .play-btn, .music-btn {
+                width: 40px;
+                height: 40px;
+            }
+            .nav-btn {
+                font-size: 24px;
+                padding: 10px 14px;
+            }
+            .prev-btn { left: 10px; }
+            .next-btn { right: 10px; }
+            .modal-slideshow-container { max-width: 95%; }
         }
     </style>
 </head>
@@ -400,12 +448,12 @@
             <input type="number" id="intervalInput" class="time-input" value="5" min="1" max="60" onchange="handleTimeChange()">
             <label for="intervalInput">сек</label>
             <button id="slideshowBtn" class="btn play-btn" onclick="toggleSlideshow()">
-                ▶ Тоглуулах
+                ▶
             </button>
         </div>
 
-        <button id="musicControlBtn" class="btn music-btn" onclick="toggleMusic()">
-            🎵 Хөгжим асаах
+        <button id="musicControlBtn" class="btn music-btn muted" onclick="toggleMusic()">
+            🎵
         </button>
     </div>
 
@@ -576,10 +624,15 @@
 
     <div id="imageModal" class="modal" onclick="closeModal()">
         <span class="close-btn">&times;</span>
+        
+        <button class="nav-btn prev-btn" onclick="prevImage(event)">❮</button>
+        
         <div class="modal-slideshow-container" onclick="event.stopPropagation()">
             <img id="imgTargetCurrent" class="modal-slide modal-slide-current">
             <img id="imgTargetNext" class="modal-slide modal-slide-next hidden">
         </div>
+        
+        <button class="nav-btn next-btn" onclick="nextImage(event)">❯</button>
     </div>
 
     <script>
@@ -596,10 +649,10 @@
             if (!isMusicPlaying) {
                 music.play().then(() => {
                     isMusicPlaying = true;
-                    btn.innerHTML = '⏸ Хөгжим зогсоох';
+                    btn.innerHTML = '⏸';
                     btn.classList.remove('muted');
                 }).catch(error => {
-                    console.log("Хөтчийн аюулгүй байдлын улмаас хөгжим шууд тоглогдсонгүй: ", error);
+                    console.log("Хөтчийн горимын улмаас аудио шууд тоглогдсонгүй.");
                 });
             }
         }
@@ -612,20 +665,19 @@
             if (isMusicPlaying) {
                 music.pause();
                 isMusicPlaying = false;
-                btn.innerHTML = '🎵 Хөгжим асаах';
+                btn.innerHTML = '🎵';
                 btn.classList.add('muted');
             } else {
                 music.play();
                 isMusicPlaying = true;
-                btn.innerHTML = '⏸ Хөгжим зогсоох';
+                btn.innerHTML = '⏸';
                 btn.classList.remove('muted');
             }
         }
 
-        // Хэрэглэгч хуудас дээр анх удаа товших үед хөгжмийг идэвхжүүлэх
+        // Хэрэглэгчийн анхны товшилтоор хөгжим идэвхжүүлэх
         document.addEventListener('click', function initAudio() {
             playBackgroundMusic();
-            // Нэг удаа ажиллаад сонсогчоо устгана
             document.removeEventListener('click', initAudio);
         });
 
@@ -633,7 +685,7 @@
         function filterClass(className) {
             currentClassFilter = className;
             stopSlideshow(); 
-            playBackgroundMusic(); // Товших үед хөгжим асаахыг оролдох
+            playBackgroundMusic();
 
             const buttons = document.querySelectorAll('.filter-buttons .btn');
             buttons.forEach(btn => btn.classList.remove('active'));
@@ -653,7 +705,7 @@
             });
         }
 
-        // Идэвхтэй зургуудыг авах
+        // Идэвхтэй зургуудыг авах (Шүүлтүүрт тохирсон)
         function getActiveImages() {
             const items = document.querySelectorAll('.gallery-item');
             let activeImages = [];
@@ -666,7 +718,31 @@
             return activeImages;
         }
 
-        // Интервал эхлүүлэх үндсэн функц
+        // Дараагийн зураг руу шилжих функц (Суман товч болон автомат горимд хамт ашиглана)
+        function nextImage(event) {
+            if (event) event.stopPropagation(); // Модал хаагдахаас сэргийлнэ
+            if (event) stopSlideshow(); // Хэрэглэгч өөрөө дарвал автомат слайдыг зогсооно
+            
+            const images = getActiveImages();
+            if (images.length === 0) return;
+            
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            document.getElementById('imgTargetCurrent').src = images[currentImageIndex];
+        }
+
+        // Өмнөх зураг руу шилжих функц
+        function prevImage(event) {
+            if (event) event.stopPropagation();
+            stopSlideshow(); // Хэрэглэгч өөрөө дарвал автомат слайдыг зогсооно
+            
+            const images = getActiveImages();
+            if (images.length === 0) return;
+            
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            document.getElementById('imgTargetCurrent').src = images[currentImageIndex];
+        }
+
+        // Слайд интервал эхлүүлэх функц
         function startSlideshowInterval(seconds) {
             if(slideshowInterval) clearInterval(slideshowInterval);
             
@@ -702,11 +778,11 @@
             }, seconds * 1000);
         }
 
-        // Автомат тоглуулахыг эхлүүлэх / зогсоох
+        // Автомат тоглуулах / зогсоох
         function toggleSlideshow() {
             const btn = document.getElementById('slideshowBtn');
             const timeInput = document.getElementById('intervalInput');
-            playBackgroundMusic(); // Тоглуулах товч дарахад хөгжим хамт асна
+            playBackgroundMusic();
             
             if (slideshowInterval) {
                 stopSlideshow();
@@ -720,13 +796,12 @@
                 currentImageIndex = 0;
                 openModal(activeImages[currentImageIndex]); 
                 btn.classList.add('playing');
-                btn.innerHTML = '⏸ Зогсоох';
+                btn.innerHTML = '⏸';
 
                 startSlideshowInterval(seconds);
             }
         }
 
-        // Ажиллаж байх үед секунд өөрчлөгдвөл шууд шинэчлэх
         function handleTimeChange() {
             if (slideshowInterval) {
                 const timeInput = document.getElementById('intervalInput');
@@ -737,7 +812,6 @@
             }
         }
 
-        // Автомат тоглуулалтыг зогсоох функц
         function stopSlideshow() {
             if (slideshowInterval) {
                 clearInterval(slideshowInterval);
@@ -745,23 +819,26 @@
             }
             const btn = document.getElementById('slideshowBtn');
             btn.classList.remove('playing');
-            btn.innerHTML = '▶ Тоглуулах';
+            btn.innerHTML = '▶';
         }
 
-        // Зураг томруулах функц
         function openModal(imgSrc) {
             const modal = document.getElementById('imageModal');
             const modalImgCurrent = document.getElementById('imgTargetCurrent');
             modal.style.display = 'flex';
             playBackgroundMusic();
             
+            // Одоогийн дарсан зургийн индексийг олох
+            const images = getActiveImages();
+            currentImageIndex = images.indexOf(imgSrc);
+            if (currentImageIndex === -1) currentImageIndex = 0;
+
             setTimeout(() => {
                 modal.classList.add('show');
                 modalImgCurrent.src = imgSrc;
             }, 10);
         }
 
-        // Зураг хаах функц
         function closeModal() {
             const modal = document.getElementById('imageModal');
             modal.classList.remove('show');
@@ -776,10 +853,17 @@
             }, 500); 
         }
 
-        // ESC товч дарахад хаагдах
+        // Гарнаас удирдах хэсэг (Esc, Зүүн суут, Баруун суут)
         document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape") {
-                closeModal();
+            const modal = document.getElementById('imageModal');
+            if (modal.style.display === 'flex') {
+                if (event.key === "Escape") {
+                    closeModal();
+                } else if (event.key === "ArrowRight") {
+                    nextImage(event);
+                } else if (event.key === "ArrowLeft") {
+                    prevImage(event);
+                }
             }
         });
     </script>
