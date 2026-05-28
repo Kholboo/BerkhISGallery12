@@ -131,6 +131,30 @@
             box-shadow: 0 4px 10px rgba(139, 0, 0, 0.3);
         }
 
+        /* Хөгжмийн тоглуулагчийн блок */
+        .music-playlist-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #fff;
+            padding: 5px 15px;
+            border-radius: 25px;
+            border: 2px solid #2980b9;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .music-select {
+            border: none;
+            outline: none;
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 0.9rem;
+            background: transparent;
+            cursor: pointer;
+            max-width: 180px;
+            padding-right: 5px;
+        }
+
         /* Дүрсэн (Icon) товчлуурууд */
         .play-btn, .music-btn {
             width: 40px;
@@ -361,6 +385,8 @@
             .controls-container { flex-direction: column; gap: 15px; }
             .filter-buttons { width: 100%; justify-content: center; }
             .slideshow-controls { width: 100%; justify-content: center; }
+            .music-playlist-container { width: 100%; justify-content: center; }
+            .music-select { max-width: 70%; }
             .btn { padding: 8px 16px; font-size: 0.9rem; }
             .play-btn, .music-btn { width: 40px; height: 40px; }
             .nav-btn { font-size: 24px; padding: 10px 14px; }
@@ -372,7 +398,7 @@
 </head>
 <body>
 
-    <audio id="bgMusic" loop src="sounds/surguuli_duu.mp3"></audio>
+    <audio id="bgMusic" src="sounds/surguuli_duu.mp3" onended="playNextTrack()"></audio>
 
     <header>
         <div class="header-content">
@@ -389,8 +415,8 @@
     <div class="controls-container">
         <div class="filter-buttons">
             <button class="btn active" onclick="filterClass('all')">Бүгд</button>
-            <button class="btn" onclick="filterClass('12a')">12а анги</button>
-            <button class="btn" onclick="filterClass('12b')">12б анги</button>
+            <button class="btn" onclick="filterClass('12a')">12а - анги</button>
+            <button class="btn" onclick="filterClass('12b')">12б - анги</button>
         </div>
         
         <div class="slideshow-controls">
@@ -402,9 +428,27 @@
             </button>
         </div>
 
-        <button id="musicControlBtn" class="btn music-btn muted" onclick="toggleMusic()">
-            🎵
-        </button>
+        <div class="music-playlist-container">
+            <select id="musicSelect" class="music-select" onchange="handleMusicChange()">
+                <option value="sounds/surguuli_duu.mp3">Сургуулийн дуу</option>
+                <option value="sounds/ Bid Neg Angiinhan_3 buduun.mp3">Бид нэг ангийнхан (3 Бүдүүн)</option>
+                <option value="sounds/8-DAHI-GARIG-10-JILIIN-DURSAMJ.mp3">10 жилийн дурсамж (8 Дахь гариг)</option>
+                <option value="sounds/favway_surguuli_min_bayartai.mp3">Сургууль минь баяртай (Favway)</option>
+                <option value="sounds/Gala_neg_angiinhan.mp3">Нэг ангийнхан (Gala)</option>
+                <option value="sounds/Hurd - Нэг Ангийнхан (Official Music Video) - Hurd.mp3">Нэг ангийнхан (Хурд)</option>
+                <option value="sounds/Khonkhnii nulims.mp3">Хонхны нулимс</option>
+                <option value="sounds/surguuliin_zug.mp3">Сургуулийн зүг</option>
+                <option value="sounds/Tugsuh_suragchin_uyanga.mp3">Төгсөх сурагч (Уянга)</option>
+                <option value="sounds/Uyakhan tsenkher khavar.mp3">Уянхан цэнхэр хавар</option>
+                <option value="sounds/Чоно - Сүүлчийн хичээлийн дараа Svvlchiin khicheeliin daraa[Үгтэй] - GP Video.mp3">Сүүлчийн хичээлийн дараа (Чоно)</option>
+                <option value="sounds/Guys_surguuli_mine_bayartai.mp3">Сургууль минь баяртай (Guys)</option>
+                <option value="sounds/DIGITAL - MUNGUN HONHNII DUU.mp3">Мөнгөн хонхны дуу (Digital)</option>
+                <option value="sounds/solongo_shig_nas.mp3">Солонго шиг нас</option>
+            </select>
+            <button id="musicControlBtn" class="btn music-btn muted" onclick="toggleMusic()">
+                🎵
+            </button>
+        </div>
     </div>
 
     <div class="gallery-container">
@@ -612,6 +656,37 @@
             }
         }
 
+        // Жагсаалтаас дуу солих үед ажиллах функц
+        function handleMusicChange() {
+            const music = document.getElementById('bgMusic');
+            const musicSelect = document.getElementById('musicSelect');
+            
+            // Сонгогдсон дууны замыг солих
+            music.src = musicSelect.value;
+            
+            // Хэрэв хөгжим идэвхтэй тоглож байсан бол шууд дараагийн дууг тоглуулна
+            if (isMusicPlaying) {
+                music.play().catch(error => {
+                    console.log("Аудио тоглуулахад алдаа гарлаа.");
+                });
+            }
+        }
+
+        // Дуу дуусах үед автоматаар дараагийн дуу руу шилжих логик
+        function playNextTrack() {
+            const musicSelect = document.getElementById('musicSelect');
+            let currentIndex = musicSelect.selectedIndex;
+            
+            // Дараагийн дууны индексийг тооцоолох (Хэрэв хамгийн сүүлчийнх бол 0 буюу эхнийх рүү шилжинэ)
+            let nextIndex = (currentIndex + 1) % musicSelect.options.length;
+            
+            // Сонголтыг өөрчлөх
+            musicSelect.selectedIndex = nextIndex;
+            
+            // Шинэ дууг ачаалж тоглуулах функцыг дуудах
+            handleMusicChange();
+        }
+
         // Ангиар шүүх функц
         function filterClass(className) {
             currentClassFilter = className;
@@ -652,7 +727,7 @@
         function nextImage(event) {
             if (event) {
                 event.stopPropagation();
-                stopSlideshow(); // Хэрэглэгч гараар дарвал автомат слайдыг зогсооно
+                stopSlideshow(); 
             }
             
             const images = getActiveImages();
@@ -666,7 +741,7 @@
         function prevImage(event) {
             if (event) {
                 event.stopPropagation();
-                stopSlideshow(); // Хэрэглэгч гараар дарвал автомат слайдыг зогсооно
+                stopSlideshow(); 
             }
             
             const images = getActiveImages();
