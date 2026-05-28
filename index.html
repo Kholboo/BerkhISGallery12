@@ -135,7 +135,7 @@
         .music-playlist-container {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             background-color: #fff;
             padding: 5px 15px;
             border-radius: 25px;
@@ -156,7 +156,7 @@
         }
 
         /* Дүрсэн (Icon) товчлуурууд */
-        .play-btn, .music-btn {
+        .play-btn, .music-btn, .mode-btn {
             width: 40px;
             height: 40px;
             padding: 0 !important;
@@ -196,6 +196,26 @@
         }
         .music-btn.muted {
             background-color: #7f8c8d;
+        }
+
+        /* Loop / Auto Next товчлуурын загвар */
+        .mode-btn {
+            background-color: #9b59b6;
+            border: none;
+            color: white;
+            font-size: 1rem;
+        }
+        .mode-btn:hover {
+            background-color: #8e44ad;
+            box-shadow: 0 4px 10px rgba(155, 89, 182, 0.3);
+            color: white;
+        }
+        .mode-btn.loop-active {
+            background-color: #f39c12;
+        }
+        .mode-btn.loop-active:hover {
+            background-color: #d35400;
+            box-shadow: 0 4px 10px rgba(243, 156, 18, 0.3);
         }
 
         /* Зургийн цомог (Grid) */
@@ -331,7 +351,7 @@
             visibility: hidden;
         }
 
-        /* ШИНЭЧЛЭГДСЭН СЛАЙД ШИЛЖИЛТИЙН АНИМАЦИ (Зүүнээс орж, баруун тийш уусах) */
+        /* СЛАЙД ШИЛЖИЛТИЙН АНИМАЦИ (Зүүнээс орж, баруун тийш уусах) */
         @keyframes slideInFromLeft {
             from { transform: translateX(-100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
@@ -342,20 +362,17 @@
             to { transform: translateX(100%); opacity: 0; }
         }
 
-        /* Одоо харагдаж байгаа зураг */
         .modal-slide-current {
             position: relative;
             opacity: 1;
             visibility: visible;
         }
 
-        /* Одоо байгаа зураг баруун тийш уусан алга болох */
         .modal-slide-current.hide {
             animation: slideOutToRightFade 0.8s ease forwards;
             pointer-events: none;
         }
 
-        /* Дараагийн зураг зүүнээс орж ирэх */
         .modal-slide-next.show {
             visibility: visible;
             animation: slideInFromLeft 0.8s ease forwards;
@@ -386,9 +403,9 @@
             .filter-buttons { width: 100%; justify-content: center; }
             .slideshow-controls { width: 100%; justify-content: center; }
             .music-playlist-container { width: 100%; justify-content: center; }
-            .music-select { max-width: 70%; }
+            .music-select { max-width: 60%; }
             .btn { padding: 8px 16px; font-size: 0.9rem; }
-            .play-btn, .music-btn { width: 40px; height: 40px; }
+            .play-btn, .music-btn, .mode-btn { width: 40px; height: 40px; }
             .nav-btn { font-size: 24px; padding: 10px 14px; }
             .prev-btn { left: 10px; }
             .next-btn { right: 10px; }
@@ -398,7 +415,7 @@
 </head>
 <body>
 
-    <audio id="bgMusic" src="sounds/surguuli_duu.mp3" onended="playNextTrack()"></audio>
+    <audio id="bgMusic" src="sounds/surguuli_duu.mp3" onended="handleTrackEnd()"></audio>
 
     <header>
         <div class="header-content">
@@ -421,7 +438,7 @@
         
         <div class="slideshow-controls">
             <label for="intervalInput">Хугацаа:</label>
-            <input type="number" id="intervalInput" class="time-input" value="5" min="1" max="60" onchange="handleTimeChange()">
+            <input type="number" id="intervalInput" class="time-input" value="8" min="1" max="60" onchange="handleTimeChange()">
             <label for="intervalInput">сек</label>
             <button id="slideshowBtn" class="btn play-btn" onclick="toggleSlideshow()">
                 ▶
@@ -431,22 +448,27 @@
         <div class="music-playlist-container">
             <select id="musicSelect" class="music-select" onchange="handleMusicChange()">
                 <option value="sounds/surguuli_duu.mp3">Сургуулийн дуу</option>
+                <option value="sounds/Hurd - Нэг Ангийнхан (Official Music Video) - Hurd.mp3">Нэг ангийнхан (Хурд)</option>
+                <option value="sounds/Tugsuh_suragchin_uyanga.mp3">Төгсөх сурагч (Уянга)</option>
                 <option value="sounds/ Bid Neg Angiinhan_3 buduun.mp3">Бид нэг ангийнхан (3 Бүдүүн)</option>
                 <option value="sounds/8-DAHI-GARIG-10-JILIIN-DURSAMJ.mp3">10 жилийн дурсамж (8 Дахь гариг)</option>
                 <option value="sounds/favway_surguuli_min_bayartai.mp3">Сургууль минь баяртай (Favway)</option>
                 <option value="sounds/Gala_neg_angiinhan.mp3">Нэг ангийнхан (Gala)</option>
-                <option value="sounds/Hurd - Нэг Ангийнхан (Official Music Video) - Hurd.mp3">Нэг ангийнхан (Хурд)</option>
                 <option value="sounds/Khonkhnii nulims.mp3">Хонхны нулимс</option>
                 <option value="sounds/surguuliin_zug.mp3">Сургуулийн зүг</option>
-                <option value="sounds/Tugsuh_suragchin_uyanga.mp3">Төгсөх сурагч (Уянга)</option>
                 <option value="sounds/Uyakhan tsenkher khavar.mp3">Уянхан цэнхэр хавар</option>
                 <option value="sounds/Чоно - Сүүлчийн хичээлийн дараа Svvlchiin khicheeliin daraa[Үгтэй] - GP Video.mp3">Сүүлчийн хичээлийн дараа (Чоно)</option>
                 <option value="sounds/Guys_surguuli_mine_bayartai.mp3">Сургууль минь баяртай (Guys)</option>
                 <option value="sounds/DIGITAL - MUNGUN HONHNII DUU.mp3">Мөнгөн хонхны дуу (Digital)</option>
                 <option value="sounds/solongo_shig_nas.mp3">Солонго шиг нас</option>
             </select>
-            <button id="musicControlBtn" class="btn music-btn muted" onclick="toggleMusic()">
+            
+            <button id="musicControlBtn" class="btn music-btn muted" onclick="toggleMusic()" title="Тоглуулах / Түр зогсоох">
                 🎵
+            </button>
+
+            <button id="musicModeBtn" class="btn mode-btn" onclick="toggleMusicMode()" title="Горим солих: Дараагийнх руу шилжих">
+                ➡️
             </button>
         </div>
     </div>
@@ -634,7 +656,8 @@
         let currentClassFilter = 'all';
         let currentImageIndex = 0;
         let isMusicPlaying = false;
-        let isTransitioning = false; // Зураг солигдох дундуур давхар дарахаас сэргийлнэ
+        let isTransitioning = false;
+        let isLoopMode = false; // Хөгжмийн горим: false = Auto Next, true = Loop
 
         // Хөгжмийн товчлуурыг удирдах функц
         function toggleMusic() {
@@ -657,6 +680,22 @@
             }
         }
 
+        // Хөгжмийн тоглуулах горимыг солих (Loop <-> Auto Next)
+        function toggleMusicMode() {
+            const btn = document.getElementById('musicModeBtn');
+            isLoopMode = !isLoopMode;
+
+            if (isLoopMode) {
+                btn.innerHTML = '🔁';
+                btn.classList.add('loop-active');
+                btn.title = "Горим солих: Сонгосон дууг давтах";
+            } else {
+                btn.innerHTML = '➡️';
+                btn.classList.remove('loop-active');
+                btn.title = "Горим солих: Дараагийнх руу шилжих";
+            }
+        }
+
         // Жагсаалтаас дуу солих үед ажиллах функц
         function handleMusicChange() {
             const music = document.getElementById('bgMusic');
@@ -671,14 +710,23 @@
             }
         }
 
-        // Дуу дуусах үед автоматаар дараагийн дуу руу шилжих логик
-        function playNextTrack() {
-            const musicSelect = document.getElementById('musicSelect');
-            let currentIndex = musicSelect.selectedIndex;
-            let nextIndex = (currentIndex + 1) % musicSelect.options.length;
+        // Дуу дуусах үед ажиллах функц (Loop болон Auto Next-ийг тодорхойлно)
+        function handleTrackEnd() {
+            const music = document.getElementById('bgMusic');
             
-            musicSelect.selectedIndex = nextIndex;
-            handleMusicChange();
+            if (isLoopMode) {
+                // Хэрэв Loop горим идэвхтэй бол тухайн дууг дахин эхнээс нь тоглуулна
+                music.currentTime = 0;
+                music.play().catch(error => console.log(error));
+            } else {
+                // Хэрэв Auto Next горимтой бол дараагийн дуу руу шилжинэ
+                const musicSelect = document.getElementById('musicSelect');
+                let currentIndex = musicSelect.selectedIndex;
+                let nextIndex = (currentIndex + 1) % musicSelect.options.length;
+                
+                musicSelect.selectedIndex = nextIndex;
+                handleMusicChange();
+            }
         }
 
         // Ангиар шүүх функц
@@ -717,7 +765,7 @@
             return activeImages;
         }
 
-        // Зургийг анимацитайгаар солих үндсэн логик (Зүүнээс гарч, Баруун тийш уусах)
+        // Зургийг анимацитайгаар солих үндсэн логик
         function changeImageWithAnimation(nextIndex) {
             if (isTransitioning) return;
             isTransitioning = true;
@@ -726,22 +774,17 @@
             const modalImgCurrent = document.getElementById('imgTargetCurrent');
             const modalImgNext = document.getElementById('imgTargetNext');
 
-            // Дараагийн зургийг бэлдэх
             modalImgNext.src = images[nextIndex];
 
-            // Анимацийн класс болон стилийг цэвэрлэх
             modalImgCurrent.className = 'modal-slide modal-slide-current';
             modalImgNext.className = 'modal-slide modal-slide-next';
             
-            // Хөтөчид стилийг шинээр уншуулах (reflow trigger)
             void modalImgCurrent.offsetWidth;
             void modalImgNext.offsetWidth;
 
-            // Анимацийг эхлүүлэх класс нэмэх
-            modalImgCurrent.classList.add('hide'); // Одоо байгаа нь баруун тийш уусна
-            modalImgNext.classList.add('show');    // Шинэ зураг зүүнээс орно
+            modalImgCurrent.classList.add('hide'); 
+            modalImgNext.classList.add('show');    
 
-            // Анимаци дуусах үед (800ms) үндсэн зургаа шинэчилж, бэлтгэл зургийг далдлах
             setTimeout(() => {
                 modalImgCurrent.src = images[nextIndex];
                 modalImgCurrent.className = 'modal-slide modal-slide-current';
