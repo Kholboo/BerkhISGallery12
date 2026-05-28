@@ -329,17 +329,9 @@
             object-fit: contain;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.8s ease, transform 0.8s ease, visibility 0s 0.8s;
         }
 
-        .modal-slide-current {
-            position: relative;
-            opacity: 1;
-            visibility: visible;
-            transition: opacity 0.8s ease, transform 0.8s ease, visibility 0s 0s;
-        }
-
-        /* Анимациуд */
+        /* ШИНЭЧЛЭГДСЭН СЛАЙД ШИЛЖИЛТИЙН АНИМАЦИ (Зүүнээс орж, баруун тийш уусах) */
         @keyframes slideInFromLeft {
             from { transform: translateX(-100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
@@ -350,15 +342,23 @@
             to { transform: translateX(100%); opacity: 0; }
         }
 
-        .modal-slide-next.show {
+        /* Одоо харагдаж байгаа зураг */
+        .modal-slide-current {
+            position: relative;
+            opacity: 1;
             visibility: visible;
-            animation: slideInFromLeft 0.8s forwards;
-            transition: visibility 0s 0s;
         }
 
+        /* Одоо байгаа зураг баруун тийш уусан алга болох */
         .modal-slide-current.hide {
-            animation: slideOutToRightFade 0.8s forwards;
+            animation: slideOutToRightFade 0.8s ease forwards;
             pointer-events: none;
+        }
+
+        /* Дараагийн зураг зүүнээс орж ирэх */
+        .modal-slide-next.show {
+            visibility: visible;
+            animation: slideInFromLeft 0.8s ease forwards;
         }
 
         .close-btn {
@@ -623,7 +623,7 @@
         
         <div class="modal-slideshow-container" onclick="event.stopPropagation()">
             <img id="imgTargetCurrent" class="modal-slide modal-slide-current">
-            <img id="imgTargetNext" class="modal-slide modal-slide-next hidden">
+            <img id="imgTargetNext" class="modal-slide modal-slide-next">
         </div>
         
         <button class="nav-btn next-btn" onclick="nextImage(event)">❯</button>
@@ -634,6 +634,7 @@
         let currentClassFilter = 'all';
         let currentImageIndex = 0;
         let isMusicPlaying = false;
+        let isTransitioning = false; // Зураг солигдох дундуур давхар дарахаас сэргийлнэ
 
         // Хөгжмийн товчлуурыг удирдах функц
         function toggleMusic() {
@@ -661,10 +662,8 @@
             const music = document.getElementById('bgMusic');
             const musicSelect = document.getElementById('musicSelect');
             
-            // Сонгогдсон дууны замыг солих
             music.src = musicSelect.value;
             
-            // Хэрэв хөгжим идэвхтэй тоглож байсан бол шууд дараагийн дууг тоглуулна
             if (isMusicPlaying) {
                 music.play().catch(error => {
                     console.log("Аудио тоглуулахад алдаа гарлаа.");
@@ -676,14 +675,9 @@
         function playNextTrack() {
             const musicSelect = document.getElementById('musicSelect');
             let currentIndex = musicSelect.selectedIndex;
-            
-            // Дараагийн дууны индексийг тооцоолох (Хэрэв хамгийн сүүлчийнх бол 0 буюу эхнийх рүү шилжинэ)
             let nextIndex = (currentIndex + 1) % musicSelect.options.length;
             
-            // Сонголтыг өөрчлөх
             musicSelect.selectedIndex = nextIndex;
-            
-            // Шинэ дууг ачаалж тоглуулах функцыг дуудах
             handleMusicChange();
         }
 
@@ -723,35 +717,71 @@
             return activeImages;
         }
 
-        // Дараагийн зураг руу шилжих
+        // Зургийг анимацитайгаар солих үндсэн логик (Зүүнээс гарч, Баруун тийш уусах)
+        function changeImageWithAnimation(nextIndex) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+
+            const images = getActiveImages();
+            const modalImgCurrent = document.getElementById('imgTargetCurrent');
+            const modalImgNext = document.getElementById('imgTargetNext');
+
+            // Дараагийн зургийг бэлдэх
+            modalImgNext.src = images[nextIndex];
+
+            // Анимацийн класс болон стилийг цэвэрлэх
+            modalImgCurrent.className = 'modal-slide modal-slide-current';
+            modalImgNext.className = 'modal-slide modal-slide-next';
+            
+            // Хөтөчид стилийг шинээр уншуулах (reflow trigger)
+            void modalImgCurrent.offsetWidth;
+            void modalImgNext.offsetWidth;
+
+            // Анимацийг эхлүүлэх класс нэмэх
+            modalImgCurrent.classList.add('hide'); // Одоо байгаа нь баруун тийш уусна
+            modalImgNext.classList.add('show');    // Шинэ зураг зүүнээс орно
+
+            // Анимаци дуусах үед (800ms) үндсэн зургаа шинэчилж, бэлтгэл зургийг далдлах
+            setTimeout(() => {
+                modalImgCurrent.src = images[nextIndex];
+                modalImgCurrent.className = 'modal-slide modal-slide-current';
+                modalImgNext.className = 'modal-slide modal-slide-next';
+                currentImageIndex = nextIndex;
+                isTransitioning = false;
+            }, 800);
+        }
+
+        // Дараагийн зураг руу шилжих товчлуур
         function nextImage(event) {
             if (event) {
                 event.stopPropagation();
                 stopSlideshow(); 
             }
+            if (isTransitioning) return;
             
             const images = getActiveImages();
             if (images.length === 0) return;
             
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            document.getElementById('imgTargetCurrent').src = images[currentImageIndex];
+            let nextIndex = (currentImageIndex + 1) % images.length;
+            changeImageWithAnimation(nextIndex);
         }
 
-        // Өмнөх зураг руу шилжих
+        // Өмнөх зураг руу шилжих товчлуур
         function prevImage(event) {
             if (event) {
                 event.stopPropagation();
                 stopSlideshow(); 
             }
+            if (isTransitioning) return;
             
             const images = getActiveImages();
             if (images.length === 0) return;
             
-            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-            document.getElementById('imgTargetCurrent').src = images[currentImageIndex];
+            let nextIndex = (currentImageIndex - 1 + images.length) % images.length;
+            changeImageWithAnimation(nextIndex);
         }
 
-        // Слайд интервал эхлүүлэх функц (Анимацитай)
+        // Слайд интервал эхлүүлэх функц
         function startSlideshowInterval(seconds) {
             if(slideshowInterval) clearInterval(slideshowInterval);
             
@@ -759,27 +789,8 @@
                 const images = getActiveImages();
                 if (images.length === 0) return;
                 
-                let nextImageIndex = (currentImageIndex + 1) % images.length;
-                
-                const modalImgCurrent = document.getElementById('imgTargetCurrent');
-                const modalImgNext = document.getElementById('imgTargetNext');
-                
-                modalImgNext.src = images[nextImageIndex];
-                
-                modalImgCurrent.style.animation = 'none';
-                modalImgNext.style.animation = 'none';
-                void modalImgCurrent.offsetHeight; 
-                void modalImgNext.offsetHeight; 
-
-                modalImgCurrent.classList.add('hide'); 
-                modalImgNext.classList.add('show'); 
-                
-                setTimeout(() => {
-                    modalImgCurrent.src = modalImgNext.src;
-                    modalImgCurrent.classList.remove('hide');
-                    modalImgNext.classList.remove('show');
-                    currentImageIndex = nextImageIndex; 
-                }, 800); 
+                let nextIndex = (currentImageIndex + 1) % images.length;
+                changeImageWithAnimation(nextIndex);
                 
             }, seconds * 1000);
         }
@@ -854,6 +865,7 @@
                     modal.style.display = 'none';
                     document.getElementById('imgTargetCurrent').src = '';
                     document.getElementById('imgTargetNext').src = '';
+                    isTransitioning = false;
                 }
             }, 500); 
         }
